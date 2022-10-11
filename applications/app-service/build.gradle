@@ -1,0 +1,28 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	implementation project( ':api-rest')
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+    compileOnly( "org.springframework.boot:spring-boot-devtools" )
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.4'
+
+}
+
+task explodedJar(type: Copy) {
+    with jar
+    into "${buildDir}/exploded"
+}
+
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}
